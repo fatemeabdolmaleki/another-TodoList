@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Concert+One&family=Kalam:wght@300;400;700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(to top, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+
+        }
+
+        .box {
+            width: 600px;
+            min-height: 650px;
+            margin: 50px auto;
+            background-image: linear-gradient(to right, #ff758c 0%, #ff7eb3 100%);
+            border-radius: 8px;
+
+            >* {
+                color: white;
+            }
+
+            >h1 {
+                padding: 30px;
+                font-size: 40px;
+                padding-bottom: 0;
+                font-family: "Kalam", cursive;
+            }
+
+            >p {
+                padding-left: 30px;
+                padding-block: 10px;
+                font-size: 20px;
+                margin-inline: 10px;
+                border-bottom: 2px solid rgba(255, 255, 255, 0.194);
+            }
+
+            >ul {
+                margin-top: 40px;
+
+                >li {
+                    height: 70px;
+                    margin-top: 10px;
+                    display: flex;
+                    align-items: center;
+                    background-color: rgba(255, 255, 255, 0.285);
+                    padding: 20px;
+                    overflow: auto;
+                    word-break: break-all;
+
+                    >h3 {
+                        flex-grow: 1;
+                        /* border: 1px solid black; */
+                    }
+
+                    >input {
+                        width: 20px;
+                        height: 20px;
+                        margin-left: 20px;
+                        accent-color: palevioletred;
+                        border: none;
+                        outline: none;
+
+                    }
+
+                    >i {
+                        margin-left: 10px;
+                        font-size: 25px;
+
+                    }
+                }
+            }
+
+            >.bottomBox {
+                margin-top: 20px;
+                margin-left: 300px;
+                display: flex;
+
+                >p {
+                    font-size: 20px;
+                }
+
+                >button {
+                    outline: none;
+                    border: none;
+                    margin-left: 10px;
+                    border-radius: 12px;
+                    width: 50px;
+                    height: 25px;
+                    position: relative;
+
+                    >span {
+                        width: 20px;
+                        height: 20px;
+                        border-radius: 50%;
+                        background-color: palevioletred;
+                        position: absolute;
+                        top: 6%;
+                        left: 0;
+                        transition: .3s;
+
+                    }
+                }
+            }
+
+            >.final {
+                width: 100%;
+                /* border: 1px solid black; */
+                margin-top: 50px;
+                padding-bottom: 50px;
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+
+                >h2 {
+                    width: 100%;
+                    margin-left: 70px;
+                    margin-bottom: 10px;
+                    font-family: "Kalam", cursive;
+                }
+
+                >input {
+                    width: 60%;
+                    height: 50px;
+                    border: none;
+                    outline: none;
+                    font-size: 25px;
+                    padding-left: 10px;
+                    color: gray;
+                    border-radius: 3px;
+
+                }
+
+                >button {
+                    width: 20%;
+                    outline: none;
+                    border: none;
+                    border-radius: 2px;
+                    color: gray;
+                    font-size: 16px;
+                    font-weight: bold;
+                }
+            }
+        }
+
+        #box2 {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .line {
+            text-decoration: line-through;
+        }
+
+        .right {
+            transform: translateX(30px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h1>Todo List</h1>
+        <p>Get things done, one item at a time.</p>
+        <ul id="box1">
+        </ul>
+        <ul id="box2"></ul>
+        <div class="bottomBox">
+            <p>Move done items at the end?</p>
+            <button>
+                <span></span>
+            </button>
+        </div>
+        <div class="final">
+            <h2>Add to the todo list</h2>
+            <input type="text">
+            <button>ADD ITEM</button>
+        </div>
+    </div>
+</body>
+<script>
+    const ul = document.querySelector('.box>#box1')
+    const ul2 = document.querySelector('.box>#box2')
+    const inp = document.querySelector('.box>.final>input')
+    const btn = document.querySelector('.box>.final>button')
+    const toggleBtn = document.querySelector('.box>.bottomBox>button')
+    const span = document.querySelector('.box>.bottomBox>button>span')
+    console.log(toggleBtn);
+
+
+    btn.addEventListener('click', () => {
+        if (inp.value != '') {
+            let li = document.createElement('li')
+            li.innerHTML = `
+                 <h3>${inp.value}</h3>
+                <input onclick='myCheck(this)' type="checkbox">
+                <i onclick='myDelete(this)' class="bi bi-trash-fill"></i>
+            `
+            ul.appendChild(li)
+            inp.value = null
+            inp.focus()
+
+
+        } else {
+            alert('input is empty!')
+        }
+    })
+
+    const myCheck = (s) => {
+        if (s.checked) {
+            s.previousElementSibling.classList.add('line')
+        } else {
+            s.previousElementSibling.classList.remove('line')
+
+        }
+
+    }
+    const myDelete = (s) => {
+        s.parentElement.remove()
+    }
+
+    let flag = 1;
+    toggleBtn.addEventListener('click', () => {
+        const allCheckboxes = document.querySelectorAll('.box input[type="checkbox"]');
+
+        if (flag % 2) {
+            span.classList.add('right');
+
+            allCheckboxes.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    checkbox.previousElementSibling.classList.add('line');
+                    let clone = checkbox.parentElement.innerHTML;
+                    checkbox.parentElement.remove();
+                    let li = document.createElement('li');
+                    li.innerHTML = clone;
+                    ul2.appendChild(li);
+                    li.querySelector('input').checked = true;
+                } else if (!checkbox.checked) {
+                    checkbox.previousElementSibling.classList.remove('line');
+                    let clone = checkbox.parentElement.innerHTML;
+                    checkbox.parentElement.remove();
+                    let li = document.createElement('li');
+                    li.innerHTML = clone;
+                    ul.appendChild(li);
+                    li.querySelector('input').checked = false;
+                }
+            });
+
+        } else {
+            span.classList.remove('right');
+        }
+
+        flag++;
+    });
+
+
+
+</script>
+
+</html>
